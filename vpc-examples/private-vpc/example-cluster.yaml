@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+data:
+  values: |
+    global:
+      metadata:
+        name: tiuri
+        description: Example BYOVPC private cluster
+        organization: iuri
+      controlPlane:
+        apiMode: private
+        instanceType: m6i.xlarge
+      release:
+        version: 25.0.0
+      connectivity:
+        network:
+          vpcId: vpc-04334bab093ed2256
+        subnets:
+          - id: subnet-0d0389c1609e63347
+          - id: subnet-06d9f540633fe43c8
+          - id: subnet-0a8e68f43bd1ba1b8
+      nodePools:
+        v5rp3:
+          instanceType: m6a.xlarge
+          minSize: 1
+          maxSize: 3
+      providerSpecific:
+        awsClusterRoleIdentityName: default
+        region: eu-west-2
+kind: ConfigMap
+metadata:
+  labels:
+    giantswarm.io/cluster: tiuri
+  name: tiuri-userconfig
+  namespace: org-iuri
+---
+apiVersion: application.giantswarm.io/v1alpha1
+kind: App
+metadata:
+  labels:
+    app-operator.giantswarm.io/version: 0.0.0
+  name: tiuri
+  namespace: org-iuri
+spec:
+  catalog: cluster
+  config:
+    configMap:
+      name: ""
+      namespace: ""
+    secret:
+      name: ""
+      namespace: ""
+  kubeConfig:
+    context:
+      name: ""
+    inCluster: true
+    secret:
+      name: ""
+      namespace: ""
+  name: cluster-aws
+  namespace: org-iuri
+  userConfig:
+    configMap:
+      name: tiuri-userconfig
+      namespace: org-iuri

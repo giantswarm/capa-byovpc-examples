@@ -1,0 +1,5 @@
+public_vpc_cidr_block = "10.0.0.0/16"
+private_vpc_cidr_block = "10.1.0.0/16"
+public_vpc_name = "barpublic"
+private_vpc_name = "barprivate"
+k8s_cluster_name = "foo"
