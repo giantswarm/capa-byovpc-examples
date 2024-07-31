@@ -1,0 +1,67 @@
+---
+apiVersion: v1
+data:
+  values: |
+    global:
+      metadata:
+        name: foo
+        description: Example BYOVPC cluster
+        organization: giantswarm
+      controlPlane:
+        instanceType: m6i.xlarge
+      release:
+        version: 25.0.0
+      connectivity:
+        network:
+          vpcId: vpc-06ebde019901e98a3
+        subnets:
+          - id: subnet-0eb5e78cfed2ff75a
+          - id: subnet-0643a65028b55d610
+          - id: subnet-08d8e12c4f9913a1a
+          - id: subnet-012d2237b0de6a973
+          - id: subnet-03c712930a5317493
+          - id: subnet-060c5c481536b0f86
+      nodePools:
+        v5rp3:
+          instanceType: m6a.xlarge
+          minSize: 1
+          maxSize: 3
+      providerSpecific:
+        awsClusterRoleIdentityName: default
+        region: eu-central-1
+kind: ConfigMap
+metadata:
+  labels:
+    giantswarm.io/cluster: foo
+  name: foo-userconfig
+  namespace: org-giantswarm
+---
+apiVersion: application.giantswarm.io/v1alpha1
+kind: App
+metadata:
+  labels:
+    app-operator.giantswarm.io/version: 0.0.0
+  name: foo
+  namespace: org-giantswarm
+spec:
+  catalog: cluster
+  config:
+    configMap:
+      name: ""
+      namespace: ""
+    secret:
+      name: ""
+      namespace: ""
+  kubeConfig:
+    context:
+      name: ""
+    inCluster: true
+    secret:
+      name: ""
+      namespace: ""
+  name: cluster-aws
+  namespace: org-giantswarm
+  userConfig:
+    configMap:
+      name: foo-userconfig
+      namespace: org-giantswarm

@@ -103,10 +103,8 @@ resource "aws_subnet" "public" {
     var.tags,
     {
       "Name"                                          = "${var.name}-public-${each.key}"
-      "AvailabilityZone"                              = each.key
       "kubernetes.io/cluster/${var.k8s_cluster_name}" = "shared"
       "kubernetes.io/role/elb"                        = "1"
-      "giantswarm.io/cluster"                         = var.k8s_cluster_name
     },
   )
 }
@@ -130,8 +128,6 @@ resource "aws_subnet" "private" {
     var.tags,
     {
       "Name"                                          = "${var.name}-private-${each.key}"
-      "AvailabilityZone"                              = each.key
-      "giantswarm.io/cluster"                         = var.k8s_cluster_name
       "kubernetes.io/cluster/${var.k8s_cluster_name}" = "shared"
       "kubernetes.io/role/internal-elb"               = "1"
       "sigs.k8s.io/cluster-api-provider-aws/role"     = "private"
@@ -143,58 +139,4 @@ resource "aws_route_table_association" "private_subnet_association" {
   for_each       = aws_subnet.private
   subnet_id      = each.value.id
   route_table_id = aws_route_table.private[each.key].id
-}
-
-### VARIABLES
-
-variable "name" {
-  type        = string
-  description = "The name of the setup"
-}
-
-variable "k8s_cluster_name" {
-  type        = string
-  description = "The name of the Kubernetes cluster"
-}
-
-variable "cidr_block" {
-  type        = string
-  description = "The CIDR block for the VPC"
-}
-
-variable "tags" {
-  type        = map(string)
-  description = "Tags to apply to all resources"
-  default     = {}
-}
-
-variable "subnet_cidr_newbits" {
-  type        = number
-  description = "The number of bits to add to the CIDR block for the subnets"
-  default     = 8
-}
-
-### OUTPUTS
-
-output "vpc_id" {
-  value = aws_vpc.this.id
-}
-
-output "public_subnets" {
-  value = [for s in aws_subnet.public : {
-    id             = s.id
-    route_table_id = aws_route_table.public.id
-    nat_gateway_id = aws_nat_gateway.this[s.availability_zone].id
-  }]
-}
-
-output "private_subnets" {
-  value = [for s in aws_subnet.private : {
-    id             = s.id
-    route_table_id = aws_route_table.private[s.availability_zone].id
-  }]
-}
-
-output "internet_gateway_id" {
-  value = aws_internet_gateway.this.id
 }
