@@ -4,7 +4,7 @@ data:
   values: |
     global:
       metadata:
-        name: foo
+        name: byovpcpublic
         description: Example BYOVPC cluster
         organization: giantswarm
       controlPlane:
@@ -32,8 +32,8 @@ data:
 kind: ConfigMap
 metadata:
   labels:
-    giantswarm.io/cluster: foo
-  name: foo-userconfig
+    giantswarm.io/cluster: byovpcpublic
+  name: byovpcpublic-userconfig
   namespace: org-giantswarm
 ---
 apiVersion: application.giantswarm.io/v1alpha1
@@ -41,7 +41,7 @@ kind: App
 metadata:
   labels:
     app-operator.giantswarm.io/version: 0.0.0
-  name: foo
+  name: byovpcpublic
   namespace: org-giantswarm
 spec:
   catalog: cluster
@@ -63,5 +63,5 @@ spec:
   namespace: org-giantswarm
   userConfig:
     configMap:
-      name: foo-userconfig
+      name: byovpcpublic-userconfig
       namespace: org-giantswarm

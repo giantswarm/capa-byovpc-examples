@@ -59,10 +59,3 @@ resource "aws_route" "private_vpc_tgw" {
   destination_cidr_block = "0.0.0.0/0"
   transit_gateway_id     = module.tgw.ec2_transit_gateway_id
 }
-
-# Route traffic from the public VPC to the private VPC via the TGW
-resource "aws_route" "public_vpc_tgw" {
-  route_table_id         = aws_route_table.public_vpc_public.id
-  destination_cidr_block = aws_vpc.private.cidr_block
-  transit_gateway_id     = module.tgw.ec2_transit_gateway_id
-}

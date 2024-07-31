@@ -4,9 +4,9 @@ data:
   values: |
     global:
       metadata:
-        name: tiuri
+        name: byovpcprivate
         description: Example BYOVPC private cluster
-        organization: iuri
+        organization: giantswarm
       controlPlane:
         apiMode: private
         instanceType: m6i.xlarge
@@ -30,17 +30,17 @@ data:
 kind: ConfigMap
 metadata:
   labels:
-    giantswarm.io/cluster: tiuri
-  name: tiuri-userconfig
-  namespace: org-iuri
+    giantswarm.io/cluster: byovpcprivate
+  name: byovpcprivate-userconfig
+  namespace: org-giantswarm
 ---
 apiVersion: application.giantswarm.io/v1alpha1
 kind: App
 metadata:
   labels:
     app-operator.giantswarm.io/version: 0.0.0
-  name: tiuri
-  namespace: org-iuri
+  name: byovpcprivate
+  namespace: org-giantswarm
 spec:
   catalog: cluster
   config:
@@ -58,8 +58,8 @@ spec:
       name: ""
       namespace: ""
   name: cluster-aws
-  namespace: org-iuri
+  namespace: org-giantswarm
   userConfig:
     configMap:
-      name: tiuri-userconfig
-      namespace: org-iuri
+      name: byovpcprivate-userconfig
+      namespace: org-giantswarm
