@@ -22,6 +22,7 @@ The requirements to adopt an existing VPC into a CAPA cluster are:
 - Existing route tables
   - All route tables to be used by the cluster need to be tagged:
     - `kubernetes.io/cluster/<cluster_name>: shared`
-- Working routing between the subnets and to the internet / proxy
+- Working routing between the subnets and to the internet / proxy, including any needed NAT and Internet Gateways
+- It's recommended that the subnet configuration encompasses two or more AZs, for increased resilience
 
 To create a cluster adopting existing VPC and subnets, you need to set their IDs under `global.connectivity` in the Cluster App values, as shown in the [provided example manifests](./example-cluster.yaml).
