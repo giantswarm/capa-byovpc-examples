@@ -2,9 +2,23 @@
 
 This repository contains examples and information on how to Bring Your Own VPC with the Giant Swarm platform.
 
-The [`example-vpc`](./example-vpc/) directory contains Terraform configuration to deploy a simple VPC, with subnets, NAT gateways, Internet Gateway and working routing, that should serve as an example on how to setup an external VPC and then adopt it when creating a CAPA cluster.
+## Cluster with private subnets only
+A private cluster is a type of cluster that is deployed within private subnets of an existing VPC. This means that the cluster's worker nodes and control plane components are not directly accessible from the internet. The private cluster provides an additional layer of security by isolating the cluster resources from external access.
 
-The [`example-cluster.yaml`](./example-cluster.yaml) file contains Kubernetes manifests to deploy a Giant Swarm workload cluster that adopts an existing VPC and subnets. The Security Groups required by the WC will be created and managed by CAPA.
+Access to the cluster is achieved through the use of a Transit Gateway. It's not possible to attach public load balancers directly.
+
+Internet egress access is achieved routing all the traffic via a Transit Gateway to another VPC with public subnets, Internet Gateway and NAT Gateways.
+
+![Private Cluster](./media/BYOInfraPrivate.png)
+
+Check the terraform code in [private-vpc](vpc-examples/private-vpc/) to create this scenario and the [cluster definition](vpc-examples/private-vpc/example-cluster.yaml).
+
+## Cluster with public subnets
+A cluster with public subnets allows for the creation of public ingress and provides an internet-reachable Kubernetes API. This type of cluster is suitable for scenarios where external access to the cluster resources is required. Public load balancers can be attached directly to the worker nodes and control plane components, enabling easy access from the internet.
+
+![Public Cluster](./media/BYOInfraPublic.png)
+
+Check the terraform code in [public-vpc](vpc-examples/public-vpc/) to create this scenario and the [cluster definition](vpc-examples/public-vpc/example-cluster.yaml).
 
 ## VPC requirements
 
