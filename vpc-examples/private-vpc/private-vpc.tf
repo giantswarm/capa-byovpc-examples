@@ -48,6 +48,8 @@ resource "aws_subnet" "private_vpc_private" {
       "kubernetes.io/cluster/${var.k8s_cluster_name}" = "shared"
       "kubernetes.io/role/internal-elb"               = "1"
       "sigs.k8s.io/cluster-api-provider-aws/role"     = "private"
+      "giantswarm.io/cluster"                         = var.k8s_cluster_name
+      "giantswarm.io/installation"                    = var.k8s_management_cluster_name
     },
   )
 }

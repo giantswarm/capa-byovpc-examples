@@ -13,6 +13,16 @@ variable "k8s_cluster_name" {
   description = "The name of the Kubernetes cluster"
 }
 
+variable "k8s_management_cluster_name" {
+  type        = string
+  description = "The name of the Management cluster"
+}
+
+variable "mc_vpc_cidr_block" {
+  type        = string
+  description = "The CIDR block for the Management Cluster VPC"
+}
+
 variable "private_vpc_cidr_block" {
   type        = string
   description = "The CIDR block for the VPC"
