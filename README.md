@@ -13,6 +13,8 @@ Internet egress access is achieved routing all the traffic via a Transit Gateway
 
 Check the terraform code in [private-vpc](vpc-examples/private-vpc/) to create this scenario and the [cluster definition](vpc-examples/private-vpc/example-cluster.yaml).
 
+Once the infrastructure is created, you will need to attache the Transit Gateway to the Management Cluster VPC and add routing to the MC private subnets to the WC private subnets through the Transit Gateway.
+
 ## Cluster with public subnets
 A cluster with public subnets allows for the creation of public ingress and provides an internet-reachable Kubernetes API. This type of cluster is suitable for scenarios where external access to the cluster resources is required. Public load balancers can be attached directly to the worker nodes and control plane components, enabling easy access from the internet.
 
