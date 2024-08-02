@@ -30,6 +30,8 @@ The requirements to adopt an existing VPC into a CAPA cluster are:
 - Existing Subnets
   - All subnets to be used by the cluster need to be tagged:
     - `kubernetes.io/cluster/<cluster_name>: shared`
+    - `giantswarm.io/cluster: cluster-id`
+    - `giantswarm.io/installation: managementcluster-id`
   - All public subnets (if any) need to be tagged:
     - `kubernetes.io/role/elb: "1"`
   - All private subnets need to be tagged:
