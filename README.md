@@ -44,3 +44,31 @@ The requirements to adopt an existing VPC into a CAPA cluster are:
 - It's recommended that the subnet configuration encompasses two or more AZs, for increased resilience
 
 To create a cluster adopting existing VPC and subnets, you need to set their IDs under `global.connectivity` in the Cluster App values, as shown in the [provided example manifests](./example-cluster.yaml).
+
+## Operator Permissions
+If all clusters are deployed on existing infrastructure managed externally, the operator does not need this permissions:
+```
+               "ec2:AssociateRouteTable",
+               "ec2:AssociateVpcCidrBlock",
+               "ec2:AttachInternetGateway",
+               "ec2:CreateInternetGateway",
+               "ec2:CreateNatGateway",
+               "ec2:CreateRoute",
+               "ec2:CreateRouteTable",
+               "ec2:CreateSubnet",
+               "ec2:CreateVpc",
+               "ec2:CreateVpcEndpoint",
+               "ec2:ModifyVpcAttribute",
+               "ec2:ModifyVpcEndpoint",
+               "ec2:DeleteInternetGateway",
+               "ec2:DeleteNatGateway",
+               "ec2:DeleteRouteTable",
+               "ec2:DeleteSubnet",
+               "ec2:DeleteVpc",
+               "ec2:DeleteVpcEndpoints",
+               "ec2:DetachInternetGateway",
+               "ec2:DisassociateRouteTable",
+               "ec2:DisassociateVpcCidrBlock",
+               "ec2:ModifySubnetAttribute",
+               "ec2:ReplaceRoute",
+```
